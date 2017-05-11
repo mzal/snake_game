@@ -51,3 +51,10 @@ bool Snake::checkCollision(void){
 std::vector< std::pair<int,int> > Snake::getLocation(void){
     return location;
 }
+
+void Snake::resetSnake(int start_x, int start_y){
+    location.clear();
+    first_x = start_x;
+    first_y = start_y;
+    location.push_back(std::make_pair(first_x,first_y));
+}

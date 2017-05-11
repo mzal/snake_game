@@ -57,6 +57,12 @@ int main()
                     case sf::Keyboard::Down:
                         if (direction != 1) direction = 3;
                         break;
+                    case sf::Keyboard::R:
+                        snake.resetSnake(start_x, start_y);
+                        fruit.moveFruit();
+                        direction = 0;
+                        score = 0;
+                        break;
                     case sf::Keyboard::Escape:
                         window.close();
                     default:
