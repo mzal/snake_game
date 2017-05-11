@@ -22,6 +22,8 @@ int main()
     Fruit fruit(WINDOW_X/SCALE, WINDOW_Y/SCALE);
     Snake snake(start_x, start_y, grid_x, grid_y);
 
+    std::vector< std::pair<int,int> > location;
+
     sf::Font font;
     font.loadFromFile("arial.ttf");
     sf::Text score_text;
@@ -61,7 +63,7 @@ int main()
                         break;
                     case sf::Keyboard::R:
                         snake.resetSnake(start_x, start_y);
-                        fruit.moveFruit();
+                        fruit.moveFruit(location);
                         direction = 0;
                         score = 0;
                         ss.str("");
@@ -80,10 +82,10 @@ int main()
 
         if (!snake.checkCollision()) {
             snake.moveSnake(direction);
-            std::vector< std::pair<int,int> > location = snake.getLocation();
+            location = snake.getLocation();
 
             if (fruit.position_x == location[location.size()-1].first && fruit.position_y == location[location.size()-1].second){
-                fruit.moveFruit();
+                fruit.moveFruit(location);
                 snake.enlargeSnake();
                 score += SCORE_F;
                 ss.str("");
