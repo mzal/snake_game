@@ -32,6 +32,7 @@ int main()
     sf::Text game_over_text;
     game_over_text.setFont(font);
     game_over_text.setString("GAME OVER");
+    game_over_text.setOrigin(game_over_text.getLocalBounds().width/2, game_over_text.getLocalBounds().height/2);
     game_over_text.setPosition(sf::Vector2f(WINDOW_X/2,WINDOW_Y/2));
 
     sf::Time delay = sf::seconds(DELAY_TIME);
@@ -62,6 +63,9 @@ int main()
                         fruit.moveFruit();
                         direction = 0;
                         score = 0;
+                        ss.str("");
+                        ss << score;
+                        score_text.setString(ss.str());
                         break;
                     case sf::Keyboard::Escape:
                         window.close();

@@ -40,10 +40,10 @@ bool Snake::checkCollision(void){
     if (location.size() > 2)
         for (int i=0;i<location.size()-1;i++)
             if (location[location.size()-1] == location[i]) return true;
-    if (first_x > grid_x ||
-        first_y > grid_y ||
-        first_x < 0 ||
-        first_y < 0)
+    if (location[location.size()-1].first > grid_x ||
+        location[location.size()-1].second > grid_y ||
+        location[location.size()-1].first < 0 ||
+        location[location.size()-1].second < 0)
         return true;
     return false;
 }
