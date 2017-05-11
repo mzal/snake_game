@@ -16,6 +16,7 @@ int main()
         grid_x = WINDOW_X/SCALE,
         grid_y = WINDOW_Y/SCALE,
         direction = 0, //0 = Right, 1 = Up, 2 = Left, 3 = Down
+        init_direction = direction,
         score = 0;
 
     Fruit fruit(WINDOW_X/SCALE, WINDOW_Y/SCALE);
@@ -47,16 +48,16 @@ int main()
             if(event.type == sf::Event::KeyPressed){
                 switch(event.key.code){
                     case sf::Keyboard::Right:
-                        if (direction != 2) direction = 0;
+                        if (init_direction != 2) direction = 0;
                         break;
                     case sf::Keyboard::Up:
-                        if (direction != 3) direction = 1;
+                        if (init_direction != 3) direction = 1;
                         break;
                     case sf::Keyboard::Left:
-                        if (direction != 0) direction = 2;
+                        if (init_direction != 0) direction = 2;
                         break;
                     case sf::Keyboard::Down:
-                        if (direction != 1) direction = 3;
+                        if (init_direction != 1) direction = 3;
                         break;
                     case sf::Keyboard::R:
                         snake.resetSnake(start_x, start_y);
@@ -75,6 +76,7 @@ int main()
             }
         }
 
+        init_direction = direction;
 
         if (!snake.checkCollision()) {
             snake.moveSnake(direction);
@@ -91,17 +93,21 @@ int main()
 
             //GRAPHICS
             window.clear(sf::Color::Black);
+
             sf::RectangleShape rectangle(sf::Vector2f(SCALE, SCALE));
             rectangle.setFillColor(sf::Color::Cyan);
             for (int i=0;i<location.size();i++){
                 rectangle.setPosition(location[i].first*SCALE, location[i].second*SCALE);
                 window.draw(rectangle);
             }
+
             sf::CircleShape circle(SCALE/2);
             circle.setFillColor(sf::Color::Red);
             circle.setPosition(fruit.position_x*SCALE, fruit.position_y*SCALE);
             window.draw(circle);
+
             window.draw(score_text);
+
             window.display();
             //END OF GRAPHICS
         }
@@ -110,6 +116,7 @@ int main()
             window.draw(game_over_text);
             window.display();
         }
+
         sf::sleep(delay);
     }
 
