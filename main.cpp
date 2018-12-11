@@ -4,20 +4,24 @@
 #include "fruit.hpp"
 #define WINDOW_X 800
 #define WINDOW_Y 600
-#define DELAY_TIME 0.1 //seconds
+#define DELAY_TIME 0.2 //seconds
 #define SCALE 20
-#define SCORE_F 100
+#define SCORE_F 20
+#define WINDOW_TITLE "snake_game"
+#define FONT_FILE "arial.ttf"
+
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(WINDOW_X,WINDOW_Y), "snake");
+    sf::RenderWindow window(sf::VideoMode(WINDOW_X,WINDOW_Y), WINDOW_TITLE);
 
     int start_x = 0,
         start_y = 0,
         grid_x = WINDOW_X/SCALE,
         grid_y = WINDOW_Y/SCALE,
-        direction = 0, //0 = Right, 1 = Up, 2 = Left, 3 = Down
-        init_direction = direction,
         score = 0;
+
+    Direction direction = Direction::RIGHT,
+	init_direction = direction;
 
     Fruit fruit(WINDOW_X/SCALE, WINDOW_Y/SCALE);
     Snake snake(start_x, start_y, grid_x, grid_y);
@@ -25,7 +29,7 @@ int main()
     std::vector< std::pair<int,int> > location;
 
     sf::Font font;
-    font.loadFromFile("arial.ttf");
+    font.loadFromFile(FONT_FILE);
     sf::Text score_text;
     score_text.setFont(font);
     std::stringstream ss;
@@ -49,31 +53,32 @@ int main()
 
             if(event.type == sf::Event::KeyPressed){
                 switch(event.key.code){
-                    case sf::Keyboard::Right:
-                        if (init_direction != 2) direction = 0;
-                        break;
-                    case sf::Keyboard::Up:
-                        if (init_direction != 3) direction = 1;
-                        break;
-                    case sf::Keyboard::Left:
-                        if (init_direction != 0) direction = 2;
-                        break;
-                    case sf::Keyboard::Down:
-                        if (init_direction != 1) direction = 3;
-                        break;
-                    case sf::Keyboard::R:
-                        snake.resetSnake(start_x, start_y);
-                        fruit.moveFruit(location);
-                        direction = 0;
-                        score = 0;
-                        ss.str("");
-                        ss << score;
-                        score_text.setString(ss.str());
-                        break;
-                    case sf::Keyboard::Escape:
-                        window.close();
-                    default:
-                        break;
+		case sf::Keyboard::Right:
+		    if (init_direction != Direction::LEFT) direction = Direction::RIGHT;
+		    break;
+		case sf::Keyboard::Up:
+		    if (init_direction != Direction::DOWN) direction = Direction::UP;
+		    break;
+		case sf::Keyboard::Left:
+		    if (init_direction != Direction::RIGHT) direction = Direction::LEFT;
+		    break;
+		case sf::Keyboard::Down:
+		    if (init_direction != Direction::UP) direction = Direction::DOWN;
+		    break;
+		case sf::Keyboard::R:
+		    snake.resetSnake(start_x, start_y);
+		    fruit.moveFruit(location);
+		    direction = Direction::RIGHT;
+		    score = 0;
+		    ss.str("");
+		    ss << score;
+		    score_text.setString(ss.str());
+		    break;
+		case sf::Keyboard::Escape:
+		case sf::Keyboard::Q:
+		    window.close();
+		default:
+		    break;
                 }
             }
         }
@@ -98,7 +103,7 @@ int main()
 
             sf::RectangleShape rectangle(sf::Vector2f(SCALE, SCALE));
             rectangle.setFillColor(sf::Color::Cyan);
-            for (int i=0;i<location.size();i++){
+            for (long unsigned int i = 0; i < location.size(); i++){
                 rectangle.setPosition(location[i].first*SCALE, location[i].second*SCALE);
                 window.draw(rectangle);
             }

@@ -3,10 +3,17 @@
 
 #include <vector>
 
+enum class Direction {
+    UP,
+    DOWN,
+    RIGHT,
+    LEFT
+};
+
 class Snake {
     public:
         Snake(int start_x, int start_y, int gr_x, int gr_y);
-        void moveSnake(int direction);
+        void moveSnake(Direction dir);
         void enlargeSnake(void);
         bool checkCollision(void);
         std::vector< std::pair<int,int> > getLocation(void);
