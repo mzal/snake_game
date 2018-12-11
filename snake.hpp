@@ -1,5 +1,5 @@
-#ifndef _SNAKE_H
-#define _SNAKE_H
+#ifndef SNAKE_H
+#define SNAKE_H
 
 #include <vector>
 
@@ -25,4 +25,5 @@ class Snake {
 
 };
 
-#endif
+
+#endif /* SNAKE_H */

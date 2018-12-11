@@ -1,5 +1,5 @@
-#ifndef _FRUIT_H
-#define _FRUIT_H
+#ifndef FRUIT_H
+#define FRUIT_H
 
 #include <vector>
 
@@ -10,4 +10,4 @@ class Fruit {
         void moveFruit(std::vector< std::pair<int,int> > location);
 };
 
-#endif
+#endif /* FRUIT_H */

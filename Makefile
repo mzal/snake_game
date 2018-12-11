@@ -8,7 +8,7 @@ all: Snake
 Snake: $(OBJS)
 	$(CXX) $(CXXFLAGS) -o Snake $(OBJS) $(LIB)
 
-main.o: main.cpp snake.hpp fruit.hpp
+main.o: main.cpp snake.hpp fruit.hpp config.hpp
 	$(CXX) $(CXXFLAGS) -c main.cpp
 snake.o: snake.hpp fruit.hpp
 fruit.o: fruit.hpp
